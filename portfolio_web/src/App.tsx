@@ -8,7 +8,7 @@ import { PROJECTS, TIMELINE } from "./data/portfolioData";
 /** Temporary stand-in for a section body. Removed as each step lands. */
 function Pending({ step, label }: { step: 2 | 3; label: string }) {
     return (
-        <div className="flex min-h-40 items-center justify-center rounded-md border border-dashed border-ink-border font-mono text-xs text-text-comment">
+        <div className="flex min-h-40 items-center justify-center rounded-md border border-dashed border-ink-border px-4 text-center font-mono text-xs text-text-comment">
             {`// TODO(step-${step}): ${label}`}
         </div>
     );

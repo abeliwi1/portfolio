@@ -15,7 +15,7 @@ export function PageWrapper({ children }: PageWrapperProps) {
     return (
         <main
             id="content"
-            className="bg-ruled relative mx-auto w-full max-w-page px-5 sm:px-8 lg:px-12"
+            className="relative mx-auto w-full max-w-page px-5 sm:px-8 lg:px-12"
         >
             <div
                 aria-hidden
