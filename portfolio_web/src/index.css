@@ -35,12 +35,6 @@
     animation: caret-blink 1.1s step-end infinite;
   }
 
-  /* Faint horizontal ruling behind the page, like empty editor lines. */
-  .bg-ruled {
-    background-image: linear-gradient(to bottom, rgba(29, 36, 48, 0.55) 1px, transparent 1px);
-    background-size: 100% 2rem;
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .caret-blink {
       animation: none;
