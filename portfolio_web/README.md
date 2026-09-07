@@ -1,75 +1,48 @@
-# React + TypeScript + Vite
+# portfolio_web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Single-page software engineering portfolio. React 19 + TypeScript (strict) + Vite, styled with Tailwind CSS, animated with Framer Motion, icons from Lucide.
 
-Currently, two official plugins are available:
+The page is presented as a source file open in an editor: the navbar is the tab strip, sections are numbered like a symbol outline, the footer is the status bar, and the palette is named after syntax tokens (`keyword` accent, `comment` muted text, `string` highlight).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Scripts
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+pnpm install
+pnpm dev       # http://localhost:5173
+pnpm build     # tsc -b && vite build
+pnpm lint
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Structure
 
 ```
+portfolio_web/
+├── index.html                         Fonts (IBM Plex Sans, JetBrains Mono), meta
+├── tailwind.config.ts                 Design tokens
+├── public/
+│   ├── favicon.svg
+│   └── Resume_Andrew_Beliwine_2026_2027.pdf
+└── src/
+    ├── main.tsx
+    ├── App.tsx                        Composes the shell; sections slot in here
+    ├── index.css                      Tailwind layers, caret + ruled-background utilities
+    ├── types/index.ts                 Project, TimelineEvent, Profile, NavItem, SectionId
+    ├── data/portfolioData.ts          All copy and mock data — the only file to edit for content
+    ├── hooks/useActiveSection.ts      IntersectionObserver → active nav item
+    ├── lib/motion.ts                  Shared Framer Motion variants (fadeUp, stagger)
+    └── components/
+        ├── layout/
+        │   ├── EditorTab.tsx          Sticky glass navbar (tab strip, outline, resume, mobile menu)
+        │   ├── PageWrapper.tsx        Responsive column + left gutter rule
+        │   ├── Section.tsx            Anchor + "// 02  Title" header frame
+        │   └── StatusBar.tsx          Footer as editor status bar
+        └── ui/
+            ├── BrandIcons.tsx         GitHub / LinkedIn marks (dropped from Lucide v1)
+            └── ExternalLink.tsx       Anchor with target/rel handling
+```
+
+## Roadmap
+
+- [x] Step 1 — types, data, layout shell
+- [ ] Step 2 — Hero + interactive projects grid with tag filtering
+- [ ] Step 3 — Experience timeline + inverse-kinematics robotic arm easter egg
