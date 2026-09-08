@@ -10,7 +10,9 @@ export const PROFILE: Profile = {
     tagline:
         "I build fast, well-typed web software and care about the parts recruiters never see: state that stays consistent, tests that catch real bugs, and code someone else can read. Currently looking for a Summer 2027 software engineering internship.",
     availability: "open to SWE internships · Summer 2027",
+    target: "Summer 2027",
     location: "Toronto, CA",
+    stack: ["TypeScript", "React", "Node.js", "Go", "PostgreSQL"],
     links: {
         github: "https://github.com/abeliwi1",
         // TODO: replace with the real LinkedIn slug.

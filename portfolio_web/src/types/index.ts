@@ -78,6 +78,10 @@ export interface Profile {
     tagline: string;
     /** Short status line shown in the navbar, e.g. "open to SWE internships · Summer 2027". */
     availability: string;
+    /** The term being recruited for, e.g. "Summer 2027". Shown in the hero facts panel. */
+    target: string;
     location: string;
+    /** Primary stack, most confident first. Shown in the hero; keep to ~5. */
+    stack: readonly TechTag[];
     links: SocialLinks;
 }
