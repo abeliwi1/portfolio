@@ -70,7 +70,7 @@ export function Hero() {
                     </motion.div>
                 </Line>
 
-                <Line n={5}>
+                <Line n={5} className="hidden lg:block">
                     <motion.a
                         variants={fadeUp}
                         href="#projects"
@@ -92,9 +92,9 @@ export function Hero() {
 }
 
 /** Wraps a hero block with a line number in the gutter on `lg+`. */
-function Line({ n, children }: { n: number; children: ReactNode }) {
+function Line({ n, children, className = "" }: { n: number; children: ReactNode; className?: string }) {
     return (
-        <div className="relative">
+        <div className={`relative ${className}`}>
             <span
                 aria-hidden
                 className="absolute -left-10 top-1.5 hidden w-6 select-none text-right font-mono text-2xs tabular-nums text-text-comment/70 lg:block"
