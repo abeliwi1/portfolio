@@ -3,18 +3,11 @@ import { EditorTab } from "./components/layout/EditorTab";
 import { PageWrapper } from "./components/layout/PageWrapper";
 import { Section } from "./components/layout/Section";
 import { StatusBar } from "./components/layout/StatusBar";
+import { RoboticArm } from "./components/easter-egg/RoboticArm";
 import { Hero } from "./components/sections/Hero";
 import { Projects } from "./components/sections/Projects";
+import { Timeline } from "./components/sections/Timeline";
 import { PROJECTS, TIMELINE } from "./data/portfolioData";
-
-/** Temporary stand-in for a section body. Removed as each step lands. */
-function Pending({ step, label }: { step: 3; label: string }) {
-    return (
-        <div className="flex min-h-40 items-center justify-center rounded-md border border-dashed border-ink-border px-4 text-center font-mono text-xs text-text-comment">
-            {`// TODO(step-${step}): ${label}`}
-        </div>
-    );
-}
 
 export default function App() {
     return (
@@ -48,12 +41,12 @@ export default function App() {
                     title="Experience"
                     comment={`git log --oneline · ${TIMELINE.length} commits`}
                 >
-                    <Pending step={3} label="Vertical timeline" />
+                    <Timeline />
                 </Section>
             </PageWrapper>
 
             <StatusBar />
-            {/* Step 3: <RoboticArm /> mounts here, fixed to the bottom-right corner. */}
+            <RoboticArm />
         </MotionConfig>
     );
 }
