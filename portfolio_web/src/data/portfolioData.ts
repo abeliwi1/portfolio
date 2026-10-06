@@ -17,7 +17,7 @@ export const PROFILE: Profile = {
         github: "https://github.com/abeliwi1",
         // TODO: replace with the real LinkedIn slug.
         linkedin: "https://www.linkedin.com/in/andrew-beliwine23/",
-        resume: "/Resume_Andrew_Beliwine_2026_2027.pdf",
+        resume: "/Andrew_Beliwine_Resume.pdf",
         email: "andrewbeliwine@gmail.com",
     },
 };

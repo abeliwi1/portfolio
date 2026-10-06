@@ -21,7 +21,7 @@ portfolio_web/
 ├── tailwind.config.ts                 Design tokens
 ├── public/
 │   ├── favicon.svg
-│   └── Resume_Andrew_Beliwine_2026_2027.pdf
+│   └── Andrew_Beliwine_Resume.pdf
 └── src/
     ├── main.tsx
     ├── App.tsx                        Composes the shell; sections slot in here
