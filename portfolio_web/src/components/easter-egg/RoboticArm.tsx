@@ -14,11 +14,11 @@ import {
 /* Geometry                                                            */
 /* ------------------------------------------------------------------ */
 
-const SIZE = 240;
-const BASE: Vec2 = { x: 198, y: 214 };
-const ARM: ArmConfig = { upperArm: 82, forearm: 72, elbowSign: -1 };
+const SIZE = 260;
+const BASE: Vec2 = { x: 216, y: 232 };
+const ARM: ArmConfig = { upperArm: 92, forearm: 82, elbowSign: -1 };
 /** Where the gripper idles when the cursor leaves the window. */
-const REST_TARGET: Vec2 = { x: 112, y: 112 };
+const REST_TARGET: Vec2 = { x: 118, y: 118 };
 /** Folded pose the arm unfolds from on mount. */
 const INITIAL_ANGLES = { shoulder: -Math.PI / 2, elbow: 2.6 };
 
@@ -29,7 +29,8 @@ const GRAB_HOLD_MS = 160;
 const CLAW_OPEN_DEG = 26;
 const CLAW_CLOSED_DEG = 4;
 
-const MEDIA_QUERY = "(pointer: fine) and (min-width: 768px)";
+const MIN_WIDTH_QUERY = "(min-width: 768px)";
+const FINE_POINTER_QUERY = "(pointer: fine)";
 
 interface Ping {
     id: number;
@@ -57,12 +58,28 @@ export function RoboticArm() {
     const clawRightRef = useRef<SVGGElement>(null);
     const readoutRef = useRef<HTMLSpanElement>(null);
 
+    // Show for mouse-driven viewports only. `pointer: fine` is the fast path;
+    // some desktop environments misreport it, so the first real mouse move
+    // also counts as evidence. Touch-only devices never produce one.
     useEffect(() => {
-        const mq = window.matchMedia(MEDIA_QUERY);
-        const sync = () => setEnabled(mq.matches);
+        const wide = window.matchMedia(MIN_WIDTH_QUERY);
+        let hasMouse = window.matchMedia(FINE_POINTER_QUERY).matches;
+
+        const sync = () => setEnabled(hasMouse && wide.matches);
+        const onFirstMouseMove = (e: PointerEvent) => {
+            if (e.pointerType !== "mouse") return;
+            hasMouse = true;
+            window.removeEventListener("pointermove", onFirstMouseMove);
+            sync();
+        };
+
         sync();
-        mq.addEventListener("change", sync);
-        return () => mq.removeEventListener("change", sync);
+        wide.addEventListener("change", sync);
+        if (!hasMouse) window.addEventListener("pointermove", onFirstMouseMove, { passive: true });
+        return () => {
+            wide.removeEventListener("change", sync);
+            window.removeEventListener("pointermove", onFirstMouseMove);
+        };
     }, []);
 
     useEffect(() => {
@@ -183,7 +200,7 @@ export function RoboticArm() {
                     width={48}
                     height={16}
                     rx={3}
-                    className="fill-ink-raised stroke-ink-borderStrong"
+                    className="fill-ink-raised stroke-text-comment"
                     strokeWidth={1}
                 />
                 <circle cx={BASE.x - 16} cy={BASE.y + 4} r={1.5} className="fill-ink-borderStrong" />
@@ -197,10 +214,10 @@ export function RoboticArm() {
                         width={ARM.upperArm}
                         height={13}
                         rx={6.5}
-                        className="fill-ink-raised stroke-ink-borderStrong"
+                        className="fill-ink-raised stroke-text-comment"
                         strokeWidth={1}
                     />
-                    <line x1={12} x2={ARM.upperArm - 12} y1={0} y2={0} className="stroke-ink-border" strokeWidth={1} />
+                    <line x1={12} x2={ARM.upperArm - 12} y1={0} y2={0} className="stroke-ink-borderStrong" strokeWidth={1} />
 
                     {/* Forearm: local +x runs elbow → gripper */}
                     <g ref={forearmRef}>
@@ -210,13 +227,13 @@ export function RoboticArm() {
                             width={ARM.forearm}
                             height={10}
                             rx={5}
-                            className="fill-ink-raised stroke-ink-borderStrong"
+                            className="fill-ink-raised stroke-text-comment"
                             strokeWidth={1}
                         />
-                        <line x1={10} x2={ARM.forearm - 14} y1={0} y2={0} className="stroke-ink-border" strokeWidth={1} />
+                        <line x1={10} x2={ARM.forearm - 14} y1={0} y2={0} className="stroke-ink-borderStrong" strokeWidth={1} />
 
                         {/* Elbow joint */}
-                        <circle r={7} className="fill-ink-bg stroke-ink-borderStrong" strokeWidth={1} />
+                        <circle r={7} className="fill-ink-bg stroke-text-comment" strokeWidth={1} />
                         <circle r={2.2} className="fill-keyword" />
 
                         {/* Wrist */}
@@ -226,7 +243,7 @@ export function RoboticArm() {
                             width={8}
                             height={12}
                             rx={2}
-                            className="fill-ink-surface stroke-ink-borderStrong"
+                            className="fill-ink-surface stroke-text-comment"
                             strokeWidth={1}
                         />
 
@@ -234,7 +251,7 @@ export function RoboticArm() {
                         <g ref={clawLeftRef}>
                             <path
                                 d="M0 0 L14 -4 L18 -1"
-                                className="fill-none stroke-text-secondary"
+                                className="fill-none stroke-text-primary"
                                 strokeWidth={2}
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
@@ -243,7 +260,7 @@ export function RoboticArm() {
                         <g ref={clawRightRef}>
                             <path
                                 d="M0 0 L14 4 L18 1"
-                                className="fill-none stroke-text-secondary"
+                                className="fill-none stroke-text-primary"
                                 strokeWidth={2}
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
@@ -252,7 +269,7 @@ export function RoboticArm() {
                     </g>
 
                     {/* Shoulder joint, drawn last so it sits over both segments */}
-                    <circle r={9} className="fill-ink-bg stroke-ink-borderStrong" strokeWidth={1} />
+                    <circle r={9} className="fill-ink-bg stroke-text-comment" strokeWidth={1} />
                     <circle r={2.8} className="fill-keyword" />
                 </g>
 

@@ -112,9 +112,14 @@ export function angleDelta(a: number, b: number): number {
     return delta;
 }
 
+/** Wrap an angle into (−π, π]. */
+export function normalizeAngle(angle: number): number {
+    return angleDelta(0, angle);
+}
+
 /** Interpolate between angles along the shortest arc so the arm never spins the long way round. */
 export function lerpAngle(a: number, b: number, t: number): number {
-    return a + angleDelta(a, b) * t;
+    return normalizeAngle(a + angleDelta(a, b) * t);
 }
 
 export function toDegrees(radians: number): number {

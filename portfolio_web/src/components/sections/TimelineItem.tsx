@@ -43,7 +43,7 @@ export function TimelineItem({ event, isHead, isLast }: TimelineItemProps) {
                     className={`absolute top-1 h-2.5 w-2.5 rounded-full border-2 ${
                         ongoing
                             ? "border-keyword bg-keyword shadow-[0_0_0_3px_rgba(139,127,232,0.2)]"
-                            : "border-ink-borderStrong bg-ink-bg"
+                            : "border-text-comment bg-ink-bg"
                     }`}
                 />
                 {!isLast && <span className="mt-5 w-px flex-1 bg-ink-border" />}
